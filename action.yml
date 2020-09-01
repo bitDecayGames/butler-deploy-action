@@ -1,0 +1,28 @@
+# action.yml
+name: 'Butler Deploy'
+description: 'Deploy a directory or zip file to itch.io'
+inputs:
+  dir:
+    description: 'The relative directory or zip file that the butler command will upload to itch.io'
+    required: true
+  itchUserName:
+    description: 'The name of the user acount you are uploading this build to'
+    required: true
+  itchGameName:
+    description: 'The name of the game that you are uploading this build to'
+    required: true
+  itchChannel:
+    description: 'The name of the channel that this should be set to.  Defaults to web.  See https://itch.io/docs/butler/pushing.html#channel-names for more details.'
+    required: true
+  butlerApiKey:
+    description: 'An api key secret that is used to authenticate the butler commands'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.dir }}
+    - ${{ inputs.itchUserName }}
+    - ${{ inputs.itchGameName }}
+    - ${{ inputs.itchChannel }}
+    - ${{ inputs.butlerApiKey }}
